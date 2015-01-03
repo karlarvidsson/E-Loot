@@ -340,7 +340,7 @@
 	
 	
 	
-	<Frame name="ELootMainFrame" toplevel="true" parent="UIParent" enableMouse="true" inherits="ELootOptionsFrameTemplate" hidden="false" movable="true" resizable="true">	
+	<Frame name="ELootMainFrame" toplevel="true" parent="UIParent" enableMouse="true" inherits="ELootOptionsFrameTemplate" hidden="true" movable="true" resizable="true">	
 		<Size>
 			<AbsDimension x="648" y="560"/>
 		</Size>
