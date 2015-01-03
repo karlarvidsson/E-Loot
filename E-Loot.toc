@@ -1,0 +1,10 @@
+## Interface: 60000
+## Title: E-Loot
+## Notes: E-Loot loot distribution helper v0.1.
+## Version: 0.1
+## Author: Tigerlol
+## SavedVariables: E-LootDB
+## OptionalDependencies: BugSack
+
+embeds.xml
+E-Loot.xml

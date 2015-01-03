@@ -1,0 +1,572 @@
+
+
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<Script file="E-Loot.lua"/>
+	
+	<Frame name="ELootOptionsFrameTemplate" toplevel="true" parent="UIParent" hidden="false" enableMouse="true" frameStrata="HIGH" virtual="true" >
+		<Size>
+			<AbsDimension x="648" y="520"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="11" top="12" bottom="10"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeader" urgency="5" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="300" y="68"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentUsersInRaid" inherits="GameFontHighlightSmall" wordwrap="false" hidden="false" parentKey="users">
+					
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" >
+							<Offset>
+								<AbsDimension x="450" y="22"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentClose" inherits="UIPanelButtonTemplate" text="Close">
+				<Size>
+					<AbsDimension x="96" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						HideParentPanel(self);
+						HideUIPanel(ItemRefTooltip);
+					</OnClick>
+				</Scripts>
+				
+			</Button>
+			<Button name="$parentTest" inherits="UIPanelButtonTemplate" text="Test">
+				<Size>
+					<AbsDimension x="96" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="32" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						ELootTest();
+					</OnClick>
+				</Scripts>
+				
+			</Button>
+			<Button name="$parentPost" inherits="UIPanelButtonTemplate" text="Post">
+				<Size>
+					<AbsDimension x="96" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="132" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						ELootPost();
+					</OnClick>
+				</Scripts>
+				
+			</Button>
+			<Button name="$parentTestComms" inherits="UIPanelButtonTemplate" text="Manual sync">
+				<Size>
+					<AbsDimension x="96" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="332" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						ELootSyncComms();
+					</OnClick>
+				</Scripts>
+				
+			</Button>
+			<Button name="$parentClear" inherits="UIPanelButtonTemplate" text="Clear session">
+				<Size>
+					<AbsDimension x="96" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="232" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						ELootClear_OnClick();
+					</OnClick>
+				</Scripts>
+				
+			</Button>
+			
+			<!--
+			<Button name="$parentOkay" inherits="UIPanelButtonTemplate" text="OKAY">
+				<Size>
+					<AbsDimension x="96" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentCancel" relativePoint="BOTTOMLEFT"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						HideParentPanel(self);
+					</OnClick>
+				</Scripts>
+			</Button>
+			-->
+			
+			
+			<Frame name="$parentPanelContainer">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentCategories" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="16" y="0"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMLEFT" relativeTo="$parentCategories" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="16" y="1"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="RIGHT">
+						<Offset>
+							<AbsDimension x="-22" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+					<EdgeSize>
+						<AbsValue val="16"/>
+					</EdgeSize>
+					<TileSize>
+						<AbsValue val="16"/>
+					</TileSize>
+					<BackgroundInsets>
+						<AbsInset left="5" right="5" top="5" bottom="5"/>
+					</BackgroundInsets>
+				</Backdrop>
+				<Scripts>
+					<OnLoad>
+						self:SetBackdropBorderColor(.6, .6, .6, 1);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			
+			
+		</Frames>
+		<Scripts>
+
+		</Scripts>
+	</Frame>
+	
+	
+	
+	
+	<Button name="ELootItemButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="299" y="20"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentStripe" setAllPoints="true" file="Interface\GuildFrame\GuildFrame" parentKey="stripe">
+					<TexCoords left="0.36230469" right="0.38183594" top="0.95898438" bottom="0.99804688"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentBarTexture" hidden="true" urgency="5" file="Interface\TargetingFrame\UI-StatusBar" parentKey="barTexture">
+					<Size>
+						<AbsDimension x="10" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" x="60" y="0"/>
+					</Anchors>
+					<Color r="0" g="1" b="0" a="0.1"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				
+				<FontString name="$parentString1" inherits="GameFontHighlightSmall" wordwrap="false" hidden="false" parentKey="string1">
+					
+					<Anchors>
+						<Anchor point="LEFT" x="0" y="0"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentString2" inherits="GameFontHighlightSmall" wordwrap="false" hidden="false" parentKey="string2">
+					
+					<Anchors>
+						<Anchor point="LEFT" x="250" y="0"/>
+					</Anchors>
+				</FontString>
+				
+			</Layer>
+		</Layers>
+		
+		<HighlightTexture urgency="5" file="Interface\FriendsFrame\UI-FriendsFrame-HighlightBar" alphaMode="ADD" setAllPoints="true"/>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnClick function="ELootItemButton_OnClick"/>
+			<OnEnter function="ELootItemButton_OnEnter"/>
+			<OnLeave function="ELootItemButton_OnLeave"/>
+			
+		</Scripts>
+	</Button>
+	<Button name="ELootPlayerButtonTemplate" virtual="true" setAllPoints="true" >
+		<Size>
+			<AbsDimension x="1000" y="20"/>
+		</Size>
+		<Anchors>
+			<Anchor point="LEFT" x="0" y="0"/>
+			
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentStripe" setAllPoints="true" file="Interface\GuildFrame\GuildFrame" parentKey="stripe">
+					<TexCoords left="0.36230469" right="0.38183594" top="0.95898438" bottom="0.99804688"/>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture name="$parentBarTexture" hidden="true" urgency="5" file="Interface\TargetingFrame\UI-StatusBar" parentKey="barTexture">
+					<Size>
+						<AbsDimension x="10" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" x="60" y="0"/>
+					</Anchors>
+					<Color r="0" g="1" b="0" a="0.1"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				
+				<FontString name="$parentString1" inherits="GameFontHighlightSmall" wordwrap="false" hidden="false" parentKey="playerName" justifyH="LEFT">
+					<Size>
+						<AbsDimension x="100" />
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" x="0" y="0"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentString2" inherits="GameFontHighlightSmall" wordwrap="false" hidden="false" parentKey="curItem">
+					<Size>
+						<AbsDimension x="250" />
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" x="100"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentString3" inherits="GameFontHighlightSmall" wordwrap="false" hidden="false" parentKey="curItemlvl">
+					<Size>
+						<AbsDimension x="100" />
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" x="350"/>
+					</Anchors>
+				</FontString>
+				
+			</Layer>
+		</Layers>
+		
+		<HighlightTexture urgency="5" file="Interface\FriendsFrame\UI-FriendsFrame-HighlightBar" alphaMode="ADD" setAllPoints="true"/>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnClick function="ELootPlayerButton_OnClick"/>
+			<OnEnter function="ELootPlayerButton_OnEnter"/>
+			<OnLeave function="ELootPlayerButton_OnLeave"/>
+			
+		</Scripts>
+	</Button>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<Frame name="ELootMainFrame" toplevel="true" parent="UIParent" enableMouse="true" inherits="ELootOptionsFrameTemplate" hidden="false" movable="true" resizable="true">	
+		<Size>
+			<AbsDimension x="648" y="560"/>
+		</Size>
+		<ResizeBounds>
+			<minResize x="700" y="200"/>
+			<maxResize x="1500" y="1000"/>
+		</ResizeBounds>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" x="80" y="-200"/>
+			</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				
+				<FontString name="$parentTitle" inherits="GameFontNormal" text="E-Loot">
+					<Anchors>
+						<Anchor point="TOP" x="0" y="-2"/>
+					</Anchors>
+				</FontString>
+				
+			</Layer>
+			
+		</Layers>
+		<Scripts>
+			<OnLoad>
+					self:SetClampedToScreen(true);
+					self:RegisterEvent("CHAT_MSG_WHISPER");
+					self:RegisterEvent("CHAT_MSG_BN_WHISPER");
+					self:RegisterEvent("GROUP_ROSTER_UPDATE");
+					ELoot_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				ELootMainFrame_OnEvent(self, event, ...);
+			</OnEvent>
+			<OnMouseUp>
+				
+			</OnMouseUp>
+			<OnUpdate>
+				
+			</OnUpdate>
+		</Scripts>
+		<Frames>
+			
+			<Frame name="$parentResizeFrameRight" toplevel="true" parent="ELootMainFrame">
+				<Size x="10" />
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="0" y="0"/>
+					<Anchor point="BOTTOMRIGHT" x="0" y="20" />
+				</Anchors>
+				
+				<Scripts>
+					<OnLoad>
+						self:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnMouseDown>
+						self:GetParent():StartSizing("RIGHT");
+						
+					</OnMouseDown>
+					<OnMouseUp>
+						self:GetParent():StopMovingOrSizing();
+					</OnMouseUp>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentResizeFrameBottom" toplevel="true" parent="ELootMainFrame">
+				<Size y="10" />
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="0" y="0"/>
+					<Anchor point="BOTTOMRIGHT" x="-20" y="0" />
+				</Anchors>
+				
+				<Scripts>
+					<OnLoad>
+						self:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnMouseDown>
+						self:GetParent():StartSizing("BOTTOM");
+					</OnMouseDown>
+					<OnMouseUp>
+						self:GetParent():StopMovingOrSizing();
+					</OnMouseUp>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentResizeFrameBottomRight" toplevel="true" parent="ELootMainFrame">
+				<Size x="20" y="20" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+				</Anchors>
+				
+				<Scripts>
+					<OnLoad>
+						self:RegisterForDrag("LeftButton");
+					</OnLoad>
+					<OnMouseDown>
+						self:GetParent():StartSizing();
+					</OnMouseDown>
+					<OnMouseUp>
+						self:GetParent():StopMovingOrSizing();
+					</OnMouseUp>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentTitleDraggableFrame" toplevel="true" parent="ELootMainFrame">
+				<Size>
+						<AbsDimension x="150" y="36"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					
+				<Scripts>
+					<OnLoad>
+						
+						self.FocusedWidget = nil
+					</OnLoad>
+					
+					<OnMouseDown>
+						self:GetParent():StartMoving();
+					</OnMouseDown>
+					<OnMouseUp>
+						self:GetParent():StopMovingOrSizing();
+					</OnMouseUp>
+				</Scripts>
+			</Frame>
+			
+			<ScrollFrame name="ELootItemsScrollFrame" inherits="HybridScrollFrameTemplate" setAllPoints="true" toplevel="true" parent="ELootMainFrame">
+				<Size x="302" y="200" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="50" y="-50"/>
+						</Offset>
+					</Anchor> 
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="50" y="50"/>
+						</Offset>
+					</Anchor> 
+				</Anchors>
+				<Frames>
+					<Slider name="$parentScrollBar" inherits="HybridScrollBarTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="-12"/>
+								</Offset>
+							</Anchor>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="12"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+				</Frames>
+				<Scripts>
+					<OnLoad function="ELootItemsScrollFrame_OnLoad"/>
+					<OnEvent function="ELootItemsScrollFrame_OnEvent"/>
+					<OnShow function="ELootItemsScrollFrame_OnShow"/>
+					<OnSizeChanged function="ELootItemsScrollFrame_OnResize"/>
+				</Scripts>
+			</ScrollFrame>
+			
+			<ScrollFrame name="ELootPlayersScrollFrame" inherits="HybridScrollFrameTemplate" setAllPoints="true" toplevel="true" parent="ELootMainFrame">
+				<Size   />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="ELootItemsScrollFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="50" />
+						</Offset>
+					</Anchor> 
+					
+					<Anchor point="TOPRIGHT" >
+						<Offset>
+							<AbsDimension x="-50" y="50"/>
+						</Offset>
+					</Anchor> 
+					<Anchor point="BOTTOMRIGHT" >
+						<Offset>
+							<AbsDimension x="-50" y="50"/>
+						</Offset>
+					</Anchor> 
+					
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+				
+					<FontString name="asdfasdfasdf" inherits="GameFontNormal" hidden="true" text="No players currently requesting this item">
+						<Anchors>
+							<Anchor point="TOPLEFT" x="0" y="0"/>
+						</Anchors>
+					</FontString>
+				
+					</Layer>
+			
+				</Layers>
+				<Frames>
+					<Frame name="ELootPlayerDropDownMenu" parent="ELootMainFrame" inherits="UIDropDownMenuTemplate">
+				
+					</Frame>
+					<Slider name="$parentScrollBar" inherits="HybridScrollBarTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="-12"/>
+								</Offset>
+							</Anchor>
+							<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="12"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+				</Frames>
+				<Scripts>
+					<OnLoad function="ELootPlayersScrollFrame_OnLoad"/>
+					<OnEvent function="ELootPlayersScrollFrame_OnEvent"/>
+					<OnShow function="ELootPlayersScrollFrame_OnShow"/>
+					<OnSizeChanged function="ELootPlayersScrollFrame_OnResize"/>
+				</Scripts>
+			</ScrollFrame>
+			
+			
+		</Frames>
+	</Frame>
+
+</Ui>
